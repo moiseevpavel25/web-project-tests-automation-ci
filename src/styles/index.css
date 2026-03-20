@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #0A0A0F;
+    color: #CBD5E1;
+    font-family: 'Sora', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #12121A;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #32324C;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4DFFA8;
+  }
+}
+
+@layer components {
+  .field-input {
+    @apply w-full bg-ink-800 border border-ink-600 text-slate-300 placeholder-ink-600
+           rounded-lg px-4 py-3 font-mono text-sm
+           transition-all duration-200
+           focus:outline-none focus:border-neon-500 focus:bg-ink-900 focus:ring-1 focus:ring-neon-500/30;
+  }
+
+  .field-input.has-error {
+    @apply border-crimson-500 focus:border-crimson-400 focus:ring-crimson-500/20;
+  }
+
+  .field-select {
+    @apply w-full bg-ink-800 border border-ink-600 text-slate-300
+           rounded-lg px-4 py-3 font-mono text-sm
+           transition-all duration-200 appearance-none cursor-pointer
+           focus:outline-none focus:border-neon-500 focus:bg-ink-900 focus:ring-1 focus:ring-neon-500/30;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+  }
+
+  .field-select.has-error {
+    @apply border-crimson-500 focus:border-crimson-400;
+  }
+
+  .btn-primary {
+    @apply w-full bg-neon-600 hover:bg-neon-500 text-ink-950 font-semibold
+           py-3 px-6 rounded-lg transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-neon-400/50 focus:ring-offset-2 focus:ring-offset-ink-900
+           active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply w-full bg-transparent hover:bg-ink-800 text-slate-400 hover:text-slate-300 font-medium
+           py-3 px-6 rounded-lg border border-ink-600 hover:border-ink-500
+           transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-ink-500/50
+           active:scale-[0.98];
+  }
+
+  .error-message {
+    @apply text-crimson-400 text-xs font-mono mt-1.5 flex items-center gap-1.5;
+  }
+
+  .success-message {
+    @apply text-neon-400 text-sm font-mono mt-3 flex items-center gap-2;
+  }
+
+  .field-label {
+    @apply block text-xs font-mono font-medium text-slate-400 mb-2 uppercase tracking-wider;
+  }
+
+  .page-card {
+    @apply bg-ink-900 border border-ink-700 rounded-2xl p-8 shadow-2xl;
+  }
+
+  .checkbox-item {
+    @apply flex items-center gap-3 p-3 rounded-lg border border-ink-700 hover:border-ink-500
+           transition-all duration-150 cursor-pointer;
+  }
+
+  .checkbox-item:has(input:checked) {
+    @apply border-neon-600/50 bg-neon-600/5;
+  }
+}
+
+/* Date input calendar icon color fix */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7) sepia(1) hue-rotate(100deg);
+  cursor: pointer;
+  opacity: 0.7;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Select option background */
+select option {
+  background-color: #1C1C28;
+  color: #CBD5E1;
+}
+
+/* Placeholder fix for disabled select option */
+select option[value=""][disabled] {
+  color: #32324C;
+}
+
+/* Animation stagger utilities */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }
+.stagger-6 { animation-delay: 0.3s; }
+.stagger-7 { animation-delay: 0.35s; }
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease both;
+}
