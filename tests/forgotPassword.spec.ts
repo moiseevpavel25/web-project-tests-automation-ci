@@ -37,7 +37,7 @@ test.describe('Forgot password flows', () => {
         await expect(loginPage.title).toBeVisible() 
     })
 
-    test.describe('Negative Forgot password checks', () => {
+    test.describe('Negative Forgot password scenarios', () => {
 
         test.beforeEach(async({page}) => {
             await page.goto('/forgot-password')
