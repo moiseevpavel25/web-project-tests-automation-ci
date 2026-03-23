@@ -5,7 +5,7 @@ import { ProfilePage } from '../page-objects/profilePage'
 test.describe('Login flows', () => {
 
     test.beforeEach(async({page}) => {
-        page.goto('/')
+        await page.goto('/')
     })
 
     test('Login with valid creds', async({page}) => {

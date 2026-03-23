@@ -20,18 +20,18 @@ export class ForgotPasswordPage {
         this.backToLoginPageButton = page.getByTestId('back-to-login-button')
     }
 
-    async ResetPasswordWithPrefilledEmail() {
+    async resetPasswordWithPrefilledEmail() {
         await expect(this.title).toBeVisible()
         await this.resetPasswordButton.click()
     }
 
-    async ResetPasswordUsingEmail(email: string) {
+    async resetPasswordUsingEmail(email: string) {
         await expect(this.title).toBeVisible()
         await this.emailInputField.fill(email)
         await this.resetPasswordButton.click()
     }
 
-    async ReturntoLoginPage() {
+    async returnToLoginPage() {
         await this.backToLoginPageButton.click()
     }
 

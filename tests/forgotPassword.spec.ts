@@ -15,10 +15,10 @@ test.describe('Forgot password flows', () => {
         await loginPage.goToForgotPasswordPageWithEmail("test@test.com")
         await expect(forgotPasswordPage.emailInputField).toHaveValue("test@test.com")
 
-        await forgotPasswordPage.ResetPasswordWithPrefilledEmail()
+        await forgotPasswordPage.resetPasswordWithPrefilledEmail()
         await expect(forgotPasswordPage.resetPasswordSuccessMessage).toContainText('Please check your mailbox')
 
-        await forgotPasswordPage.ReturntoLoginPage()
+        await forgotPasswordPage.returnToLoginPage()
         await expect(loginPage.title).toBeVisible() 
 
     })
@@ -30,10 +30,10 @@ test.describe('Forgot password flows', () => {
         await loginPage.goToForgotPasswordPageWithoutEmail()
         await expect(forgotPasswordPage.emailInputField).toHaveValue("")
 
-        await forgotPasswordPage.ResetPasswordUsingEmail("test@test.com")
+        await forgotPasswordPage.resetPasswordUsingEmail("test@test.com")
         await expect(forgotPasswordPage.resetPasswordSuccessMessage).toContainText('Please check your mailbox')
 
-        await forgotPasswordPage.ReturntoLoginPage()
+        await forgotPasswordPage.returnToLoginPage()
         await expect(loginPage.title).toBeVisible() 
     })
 
@@ -46,21 +46,21 @@ test.describe('Forgot password flows', () => {
         test('Reset password with invalid email', async({page}) => {
             const forgotPasswordPage = new ForgotPasswordPage(page)
 
-            await forgotPasswordPage.ResetPasswordUsingEmail("test@test1.com")
+            await forgotPasswordPage.resetPasswordUsingEmail("test@test1.com")
             await expect(forgotPasswordPage.incorrectEmailError).toHaveText('Incorrect email address.')
         })
 
         test('Reset password with incorrect email', async({page}) => {
             const forgotPasswordPage = new ForgotPasswordPage(page)
 
-            await forgotPasswordPage.ResetPasswordUsingEmail("test@testcom")
+            await forgotPasswordPage.resetPasswordUsingEmail("test@testcom")
             await expect(forgotPasswordPage.incorrectEmailError).toHaveText('incorrect email format.')
         })
 
         test('Reset password with empty email field', async({page}) => {
             const forgotPasswordPage = new ForgotPasswordPage(page)
 
-            await forgotPasswordPage.ResetPasswordUsingEmail("")
+            await forgotPasswordPage.resetPasswordUsingEmail("")
             await expect (forgotPasswordPage.incorrectEmailError).toHaveText('Please enter your email address.')
         })
     
