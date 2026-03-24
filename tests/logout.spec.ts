@@ -3,7 +3,10 @@ import { LoginPage } from '../page-objects/loginPage'
 import { ProfilePage } from '../page-objects/profilePage'
 import { SummaryPage } from '../page-objects/summaryPage'
 
-test.beforeEach(async({page}) => {
+
+test.describe('Logout flows', () => {
+
+    test.beforeEach(async({page}) => {
         const loginPage = new LoginPage(page)
         const profilePage = new ProfilePage(page)
 
@@ -18,7 +21,7 @@ test.beforeEach(async({page}) => {
         ])
     })
 
-test('Logout flow', async({page}) => {
+    test('Logout flow', async({page}) => {
     const summaryPage = new SummaryPage(page)
     const loginPage = new LoginPage(page)
 
@@ -26,4 +29,5 @@ test('Logout flow', async({page}) => {
     //checking that user is redirected to login page after logout
     await expect(loginPage.title).toBeVisible()
 
+})
 })
