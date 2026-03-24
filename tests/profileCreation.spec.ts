@@ -82,6 +82,21 @@ test.describe('Profile creation flows', () => {
         }
     })
 
+    test('Verify occupation dropdown contains all required options', async({page}) => {
+        const profilePage = new ProfilePage(page)
+
+        //checking that occupation dropdown contains all required options
+        await expect(profilePage.occupationDropdownList.locator('option')).toHaveText([
+            "Your occupation", 
+            "Writer", 
+            "Engineer", 
+            "Developer", 
+            "Marketing", 
+            "CEO", 
+            "Designer", 
+            "Doctor"
+        ])
+    })
 
     test.describe('Negative profile creation scenarios', () => {
 

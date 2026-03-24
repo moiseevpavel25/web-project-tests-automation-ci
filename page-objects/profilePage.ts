@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class ProfilePage {
 
@@ -38,16 +38,6 @@ export class ProfilePage {
         await this.firstNameInputField.fill(firstName)
         await this.lastNameInputField.fill(lastName)
         await this.dateOfBirthPicker.fill(doB)
-        await expect(this.occupationDropdownList.locator('option')).toHaveText([
-            "Your occupation", 
-            "Writer", 
-            "Engineer", 
-            "Developer", 
-            "Marketing", 
-            "CEO", 
-            "Designer", 
-            "Doctor"
-        ])
         await this.occupationDropdownList.selectOption(occupation)
 
         for (const interest of interests) {

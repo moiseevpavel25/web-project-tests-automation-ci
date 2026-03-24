@@ -12,9 +12,15 @@ test.describe('Login flows', () => {
         const loginPage = new LoginPage(page)
         const profilePage = new ProfilePage(page)
 
-        await loginPage.checkPlaceholdersInInputFields()
         await loginPage.loginWithCredentials("test@test.com", "qwerty123")
         await expect (profilePage.title).toBeVisible()
+    })
+
+    test('Check login input fields placeholders', async({page}) => {
+        const loginPage = new LoginPage(page)
+
+        await expect (loginPage.emailInputField).toHaveAttribute('placeholder',"Your email")
+        await expect (loginPage.passwordInputField).toHaveAttribute('placeholder',"Your password")
     })
 
     test.describe('Negative login scenarios', () => {

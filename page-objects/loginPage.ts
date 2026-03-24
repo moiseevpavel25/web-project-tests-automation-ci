@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
 
@@ -26,11 +26,6 @@ export class LoginPage {
         await this.emailInputField.fill(email)
         await this.passwordInputField.fill(password)
         await this.signInButton.click()
-    }
-
-    async checkPlaceholdersInInputFields() {
-        await expect (this.emailInputField).toHaveAttribute('placeholder',"Your email")
-        await expect (this.passwordInputField).toHaveAttribute('placeholder',"Your password")
     }
 
     async goToForgotPasswordPageWithEmail(email: string) {

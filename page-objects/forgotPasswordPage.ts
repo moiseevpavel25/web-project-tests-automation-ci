@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class ForgotPasswordPage {
 
@@ -21,12 +21,12 @@ export class ForgotPasswordPage {
     }
 
     async resetPasswordWithPrefilledEmail() {
-        await expect(this.title).toBeVisible()
+        await this.title.waitFor({state: 'visible'})
         await this.resetPasswordButton.click()
     }
 
     async resetPasswordUsingEmail(email: string) {
-        await expect(this.title).toBeVisible()
+        await this.title.waitFor({state: 'visible'})
         await this.emailInputField.fill(email)
         await this.resetPasswordButton.click()
     }
