@@ -1,14 +1,9 @@
-import {test, expect} from '@playwright/test'
-import { LoginPage } from '../page-objects/loginPage'
-import { ProfilePage } from '../page-objects/profilePage'
-import { SummaryPage } from '../page-objects/summaryPage'
+import {test, expect} from '../fixtures/base'
 
 test.describe('Profile editing flows', () => {
 
-    test.beforeEach(async({page}) => {
-        const loginPage = new LoginPage(page)
-        const profilePage = new ProfilePage(page)
-
+    test.beforeEach(async({page, loginPage, profilePage}) => {
+      
         //logging in before each test to get access to profile page
         await page.goto('/')
         await loginPage.loginWithCredentials("test@test.com", "qwerty123")
@@ -20,10 +15,7 @@ test.describe('Profile editing flows', () => {
         ])
     })
 
-    test('Edit profile with valid data', async({page}) => {
-        const profilePage = new ProfilePage(page)
-        const summaryPage = new SummaryPage(page)
-
+    test('Edit profile with valid data', async({profilePage, summaryPage}) => {
         await summaryPage.goToProfileEditingPage()
         
         //editing profile with new valid data  
@@ -33,8 +25,8 @@ test.describe('Profile editing flows', () => {
         ])
        
         //checking that all profile info is correct in summary text
-        await expect(summaryPage.summaryText).toContainText(`${profile.firstName} ${profile.lastName}`),
-        await expect(summaryPage.summaryText).toContainText(profile.age.toString()),
+        await expect(summaryPage.summaryText).toContainText(`${profile.firstName} ${profile.lastName}`)
+        await expect(summaryPage.summaryText).toContainText(profile.age.toString())
         await expect(summaryPage.summaryText).toContainText(profile.occupation)
         
         for (const interest of profile.interests) {

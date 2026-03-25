@@ -1,14 +1,9 @@
-import {test, expect} from '@playwright/test'
-import { LoginPage } from '../page-objects/loginPage'
-import { ProfilePage } from '../page-objects/profilePage'
-import { SummaryPage } from '../page-objects/summaryPage'
+import {test, expect} from '../fixtures/base'
 
 
 test.describe('Logout flows', () => {
 
-    test.beforeEach(async({page}) => {
-        const loginPage = new LoginPage(page)
-        const profilePage = new ProfilePage(page)
+    test.beforeEach(async({page, loginPage, profilePage}) => {
 
         //logging in before each test to get access to profile page
         await page.goto('/')
@@ -21,13 +16,10 @@ test.describe('Logout flows', () => {
         ])
     })
 
-    test('Logout flow', async({page}) => {
-    const summaryPage = new SummaryPage(page)
-    const loginPage = new LoginPage(page)
+    test('Logout flow', async({loginPage, summaryPage}) => {
 
-    await summaryPage.signOut()
-    //checking that user is redirected to login page after logout
-    await expect(loginPage.title).toBeVisible()
-
-})
+        await summaryPage.signOut()
+        //checking that user is redirected to login page after logout
+        await expect(loginPage.title).toBeVisible()
+    })
 })

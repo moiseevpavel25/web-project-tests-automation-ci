@@ -1,6 +1,4 @@
-import {test, expect} from '@playwright/test'
-import { LoginPage } from '../page-objects/loginPage'
-import { ForgotPasswordPage } from '../page-objects/forgotPasswordPage'
+import {test, expect} from '../fixtures/base'
 
 test.describe('Forgot password flows', () => {
 
@@ -8,10 +6,7 @@ test.describe('Forgot password flows', () => {
         await page.goto('/')
     })
 
-    test('Reset password with pre-filled email', async({page}) => {
-        const loginPage = new LoginPage(page)
-        const forgotPasswordPage = new ForgotPasswordPage(page)
-
+    test('Reset password with pre-filled email', async({loginPage, forgotPasswordPage}) => {
         await loginPage.goToForgotPasswordPageWithEmail("test@test.com")
         await expect(forgotPasswordPage.emailInputField).toHaveValue("test@test.com")
 
@@ -23,10 +18,7 @@ test.describe('Forgot password flows', () => {
 
     })
 
-    test('Reset password without pre-filled email', async({page}) => {
-        const loginPage = new LoginPage(page)
-        const forgotPasswordPage = new ForgotPasswordPage(page)
-
+    test('Reset password without pre-filled email', async({loginPage, forgotPasswordPage}) => {
         await loginPage.goToForgotPasswordPageWithoutEmail()
         await expect(forgotPasswordPage.emailInputField).toHaveValue("")
 
@@ -43,23 +35,17 @@ test.describe('Forgot password flows', () => {
             await page.goto('/forgot-password')
         })
         
-        test('Reset password with invalid email', async({page}) => {
-            const forgotPasswordPage = new ForgotPasswordPage(page)
-
+        test('Reset password with invalid email', async({forgotPasswordPage}) => {
             await forgotPasswordPage.resetPasswordUsingEmail("test@test1.com")
             await expect(forgotPasswordPage.incorrectEmailError).toHaveText('Incorrect email address.')
         })
 
-        test('Reset password with incorrect email', async({page}) => {
-            const forgotPasswordPage = new ForgotPasswordPage(page)
-
+        test('Reset password with incorrect email', async({forgotPasswordPage}) => {
             await forgotPasswordPage.resetPasswordUsingEmail("test@testcom")
             await expect(forgotPasswordPage.incorrectEmailError).toHaveText('incorrect email format.')
         })
 
-        test('Reset password with empty email field', async({page}) => {
-            const forgotPasswordPage = new ForgotPasswordPage(page)
-
+        test('Reset password with empty email field', async({forgotPasswordPage}) => {
             await forgotPasswordPage.resetPasswordUsingEmail("")
             await expect (forgotPasswordPage.incorrectEmailError).toHaveText('Please enter your email address.')
         })

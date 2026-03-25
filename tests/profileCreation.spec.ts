@@ -1,22 +1,14 @@
-import {test, expect} from '@playwright/test'
-import { LoginPage } from '../page-objects/loginPage'
-import { ProfilePage } from '../page-objects/profilePage'
-import { SummaryPage } from '../page-objects/summaryPage'
+import {test, expect} from '../fixtures/base'
 
 test.describe('Profile creation flows', () => {
 
-    test.beforeEach(async({page}) => {
-        const loginPage = new LoginPage(page)
+    test.beforeEach(async({page, loginPage}) => {
 
         await page.goto('/')
         await loginPage.loginWithCredentials("test@test.com", "qwerty123")
     })
 
-
-    test('Create profile with all selected interests', async({page}) => {
-        const profilePage = new ProfilePage(page)
-        const summaryPage = new SummaryPage(page)
-
+    test('Create profile with all selected interests', async({profilePage, summaryPage}) => {
         //creating profile with all available intersts
         const profile = await profilePage.createProfile('Pavel', 'Moiss', '1991-05-10', 'Developer', [
             'Manual testing', 
@@ -30,8 +22,8 @@ test.describe('Profile creation flows', () => {
         await expect(summaryPage.title).toBeVisible()
 
         //checking that all profile info is correct in summary text
-        await expect(summaryPage.summaryText).toContainText(`${profile.firstName} ${profile.lastName}`),
-        await expect(summaryPage.summaryText).toContainText(profile.age.toString()),
+        await expect(summaryPage.summaryText).toContainText(`${profile.firstName} ${profile.lastName}`)
+        await expect(summaryPage.summaryText).toContainText(profile.age.toString())
         await expect(summaryPage.summaryText).toContainText(profile.occupation)
         
         for (const interest of profile.interests) {
@@ -50,10 +42,7 @@ test.describe('Profile creation flows', () => {
     })
 
 
-    test('Create profile with only one selected interest', async({page}) => {
-        const profilePage = new ProfilePage(page)
-        const summaryPage = new SummaryPage(page)
-
+    test('Create profile with only one selected interest', async({profilePage, summaryPage}) => {
         //creating profile with only one selected interest
         const profile = await profilePage.createProfile('Pavel', 'Moiss', '1991-05-10', 'Developer', [
             'Manual testing', 
@@ -82,9 +71,7 @@ test.describe('Profile creation flows', () => {
         }
     })
 
-    test('Verify occupation dropdown contains all required options', async({page}) => {
-        const profilePage = new ProfilePage(page)
-
+    test('Verify occupation dropdown contains all required options', async({profilePage}) => {
         //checking that occupation dropdown contains all required options
         await expect(profilePage.occupationDropdownList.locator('option')).toHaveText([
             "Your occupation", 
@@ -100,9 +87,7 @@ test.describe('Profile creation flows', () => {
 
     test.describe('Negative profile creation scenarios', () => {
 
-        test('Check the empty input fields validation', async({page}) => {
-            const profilePage = new ProfilePage(page)
-
+        test('Check the empty input fields validation', async({profilePage}) => {
             //creating profile with empty input fields
             await profilePage.submitEmptyProfile()
 
@@ -121,9 +106,7 @@ test.describe('Profile creation flows', () => {
         { value: 'Pavel@', description: 'special characters' },
     ]
         invalidFirstNameCases.forEach(({ value, description }) => {
-        test(`Check the incorrect first name validation with ${description}`, async({ page }) => {
-            const profilePage = new ProfilePage(page)
-
+        test(`Check the incorrect first name validation with ${description}`, async({ profilePage }) => {
             await profilePage.submitWithIncorrectFirstName(value)
             await expect(profilePage.firstNameError).toHaveText('Invalid First name format.')
         })
@@ -136,9 +119,7 @@ test.describe('Profile creation flows', () => {
         { value: 'Pavel@', description: 'special characters' },
     ]
         invalidLastNameCases.forEach(({ value, description }) => {
-        test(`Check the incorrect last name validation with ${description}`, async({ page }) => {
-            const profilePage = new ProfilePage(page)
-
+        test(`Check the incorrect last name validation with ${description}`, async({ profilePage }) => {
             await profilePage.submitWithIncorrectLastName(value)
             await expect(profilePage.lastNameError).toHaveText('Invalid Last name format.')
         })
