@@ -45,7 +45,7 @@ export class ProfilePage {
         }
 
         await this.submitProfileButton.click()
-        const age = await this.getUserAge(doB)
+        const age = this.calculateAge(doB)
         return { firstName, lastName, doB, occupation, interests, age }
     }
 
@@ -64,12 +64,13 @@ export class ProfilePage {
     }
 
     //helper method to count current user age
-    private async getUserAge (doB: string) {
-
-        const userAgeTimestamp = Date.now() - Date.parse(doB)
-        const userAgeInYears = Math.floor(userAgeTimestamp / (1000*60*60*24*365))
-        return userAgeInYears
-
+    private calculateAge(doB: string): number {
+        const birth = new Date(doB)
+        const current = new Date()
+        let age = current.getFullYear() - birth.getFullYear()
+        const monthDiff = current.getMonth() - birth.getMonth()
+        const dayDiff = current.getDate() - birth.getDate()
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) age--
+        return age
     }
-
 }
