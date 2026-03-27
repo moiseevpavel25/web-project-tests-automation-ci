@@ -1,5 +1,5 @@
-// ─── Hardcoded "current" date for all calculations ───────────────────────────
-export const CURRENT_DATE = new Date('2026-03-06');
+// ─── Сurrent date for all calculations ───────────────────────────
+export const CURRENT_DATE = new Date();
 
 // ─── localStorage keys ────────────────────────────────────────────────────────
 export const LS_KEYS = {
