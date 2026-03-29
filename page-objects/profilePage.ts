@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import { calculateAge } from "../tests/utils/dateHelper";
 
 export class ProfilePage {
 
@@ -45,7 +46,7 @@ export class ProfilePage {
         }
 
         await this.submitProfileButton.click()
-        const age = this.calculateAge(doB)
+        const age = calculateAge(doB)
         return { firstName, lastName, doB, occupation, interests, age }
     }
 
@@ -61,16 +62,5 @@ export class ProfilePage {
     async submitWithIncorrectLastName(lastName: string) {
         await this.lastNameInputField.fill(lastName)
         await this.submitProfileButton.click()
-    }
-
-    //helper method to count current user age
-    private calculateAge(doB: string): number {
-        const birth = new Date(doB)
-        const current = new Date()
-        let age = current.getFullYear() - birth.getFullYear()
-        const monthDiff = current.getMonth() - birth.getMonth()
-        const dayDiff = current.getDate() - birth.getDate()
-        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) age--
-        return age
     }
 }
